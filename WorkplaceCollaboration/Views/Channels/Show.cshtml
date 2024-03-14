@@ -1,0 +1,152 @@
+﻿@model WorkplaceCollaboration.Models.Channel
+
+
+@* Afisarea unui articol impreuna cu categoria din care face *@
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+<div class="card">
+
+    @Html.Partial("ChannelInfo", Model) 
+
+    @if(ViewBag.AscundeInvitate!=true)
+    {
+    <form method="post" asp-controller="Channels" asp-action="AddInvite">
+        <input type="hidden" name="ChannelId" value="@Model.Id" />
+        <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+            <input type="submit" class="btn btn-success alert-success" value="Join" />
+        </div>
+    </form>
+    }
+
+    @if (ViewBag.AfisareButoane == true || ViewBag.EsteAdmin)
+    {
+        <div class="d-flex flex-row justify-content-between p-3 border-1 border-top">
+
+            <a class="btn btn-success" href="/Channels/Edit/@Model.Id">Editeaza Canal</a>
+
+
+
+            <form method="post" action="/Channels/Delete/@Model.Id">
+
+                <button class="btn btn-danger" type="submit">Sterge Canal</button>
+
+            </form>
+
+        </div>
+    }
+
+</div>
+
+<br />
+<br />
+
+@* Afisare comentarii impreuna cu butoanele de editare si stergere *@
+
+@*@if (ViewBag.AscundeInvitate == true) (daca mergea ChannelUser)*@
+
+@foreach (var comm in Model.Messages)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                   <div class="card-text"> @Html.Raw(comm.Content)</div>
+                    <small>@comm.Date</small>
+                    <strong><i class="bi bi-person"></i>@comm.User.UserName</strong>
+
+                </div>
+                <br>
+
+
+                    @if (comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div class="d-flex">
+
+                            <div>
+
+                                <a class="btn btn-outline-primary" href="/Messages/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                            </div>
+
+                            <div>
+
+                                <form method="post" action="/Messages/Delete/@comm.Id">
+
+                                    <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    <hr/>
+                    }
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+
+@* Afisarea formularului in care se poate adauga un mesaj *@
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+                
+                <form method="post" action="/Channels/Show/@Model.Id">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="ChannelId" value="@Model.Id" />
+
+                        <label>Continut mesaj</label>
+
+                        <br />
+
+                        @Html.TextArea("Content", null, new { @class = "summernote" })
+                        @Html.ValidationMessage("Content", null, new { @class = "text-danger"})
+
+                        <br /><br />
+
+                        <button class="btn btn-success " type="submit">Adauga mesajul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>

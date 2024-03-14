@@ -1,0 +1,32 @@
+﻿@model WorkplaceCollaboration.Models.Category
+
+
+@{
+    ViewBag.Title = "Editare categorie";
+}
+<style>
+    body {
+        margin-bottom: 60px;
+        background-color: #a0d9a2;
+        background-size: 100%;
+    }
+</style>
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm(controllerName: "Categories", actionName: "Edit", method: FormMethod.Post,
+      routeValues: new { id = Model.Id }))
+{
+    <b>@Html.Label("CategoryName", "Denumire categorie")</b>
+    <br />
+    @Html.Editor("CategoryName")
+
+    @Html.ValidationMessageFor(m => m.CategoryName, null, new { @class = "text-danger" })
+    <br />
+
+    <br />
+
+    <button class="btn btn-success" type="submit">Modifica categoria</button>
+}
+
+

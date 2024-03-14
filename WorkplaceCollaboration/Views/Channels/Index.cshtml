@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<style>
+    body {
+        margin-bottom: 60px;
+        background-color: #cf8955;
+        background-size: 100%;
+    }
+</style>
+<br />
+
+<h2 class="text-center">Afisare canale</h2>
+
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+<form method="GET">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control"
+               placeholder="Search topics or keywords" name="search"
+               value="@ViewBag.SearchString">
+        <button class="btn btn-outline-success"
+                type="submit">
+            Search
+        </button>
+    </div>
+</form>
+
+@foreach (WorkplaceCollaboration.Models.Channel channel in ViewBag.Channels)
+{
+    <div class="card">
+
+        @Html.Partial("ChannelInfo", channel)
+
+
+        <a class="btn btn-success" href="/Channels/Show/@channel.Id">Afisare canal</a>
+
+    </div>
+
+    <br />
+    <br />
+
+}
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   href="@ViewBag.PaginationBaseUrl=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       href="@ViewBag.PaginationBaseUrl=@i">@(i)</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link"
+                   href="@ViewBag.PaginationBaseUrl=@(ViewBag.lastPage)" aria-
+                   label="Next">
+
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+

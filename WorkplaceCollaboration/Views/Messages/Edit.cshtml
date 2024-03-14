@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editare mesaj</h2>
+<br />
+
+<form method="post" action="/Messages/Edit/@ViewBag.Message.Id">
+
+    <label>Continut mesaj</label>
+    <br />
+
+    <textarea name="Content">@ViewBag.Message.Content</textarea>
+    <br />
+
+    <button class="btn  btn-primary" type="submit">Editeaza mesajul</button>
+
+</form>
+

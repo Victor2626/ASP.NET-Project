@@ -1,0 +1,48 @@
+﻿@model WorkplaceCollaboration.Models.Channel
+
+<h2 class="text-center mt-5">Editare canal</h2>
+<br />
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Channels", 
+                    method: FormMethod.Post, 
+                    routeValues:new { id = Model.Id }))
+           {
+             /* @Html.HiddenFor(m => m.Id)  */
+
+
+                @Html.Label("Title", "Titlu Canal")
+                <br />
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+                <br /><br />
+
+                @Html.Label("Description", "Descriere Canal")
+                <br />
+                @*@Html.Editor("Description", new { htmlAttributes = new { @class = "form-control" } })*@
+
+                @Html.TextArea("Description", Model.Description, new { @class = "form-control summernote" })
+
+                @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+                <br /><br />
+
+                <label>Selectati categoria</label>
+
+                @Html.DropDownListFor(m => m.CategoryId,
+                new SelectList(Model.Categ, "Value", "Text"),
+                "Selectati categoria", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+                <br /><br />
+
+                <button class="btn btn-sm btn-success" type="submit">Modifica canal</button>
+
+           }
+        </div>
+    </div>
+</div>
+
+
+
+
