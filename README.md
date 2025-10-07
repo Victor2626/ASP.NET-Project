@@ -27,8 +27,3 @@ The platform allows students to organize their study sessions in virtual groups.
 - `Views` – Razor views for the UI
 - `Data` – Database context and seeding
 - `wwwroot` – Static files such as CSS, JS, and images
-
-## ⚙️ Setup Instructions
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/WorkplaceCollaboration.git
